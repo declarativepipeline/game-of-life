@@ -16,6 +16,13 @@ pipeline{
                 sh 'mvn package'
             }
         }
+        stage(sonartest){
+            steps{
+                withSonarQubeEnv('My SonarQube Server') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
+        }
         stage(artifact){
             steps{
                 archiveArtifacts artifacts: '**/target/*.war'
